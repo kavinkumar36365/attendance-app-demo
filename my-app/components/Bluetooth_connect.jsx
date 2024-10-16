@@ -5,6 +5,8 @@ import { PermissionsAndroid, Platform, Text, View } from 'react-native';
 const manager = new BleManager();
 
 export default function App() {
+  const[UUID, setUUID] = useState('no UUID');
+  const[RSSI, setRSSI] = useState('no RSSI');
 
   useEffect(() => {
     scanForBeacons();
@@ -28,9 +30,9 @@ export default function App() {
       }
 
       if (device) {
-        console.log('Device name:', device.name);
-        console.log('Device UUID:', device.id);
-        console.log('RSSI:', device.rssi);
+        console.log('Found device:', device.id, device.name);
+        setUUID(device.id);
+        setRSSI(device.rssi);
       }
     });
 
@@ -42,6 +44,8 @@ export default function App() {
   return (
     <View>
       <Text>Scanning for BLE Beacons...</Text>
+      <Text>UUID: {UUID}</Text>
+      <Text>RSSI: {RSSI}</Text>
     </View>
   );
 }
