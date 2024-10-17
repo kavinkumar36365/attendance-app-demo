@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+/* import React, { useEffect,useState } from 'react';
 import { BleManager } from 'react-native-ble-plx';
 import { PermissionsAndroid, Platform, Text, View } from 'react-native';
 
 const manager = new BleManager();
 
-export default function App() {
-  const[UUID, setUUID] = useState('no UUID');
-  const[RSSI, setRSSI] = useState('no RSSI');
+const Bluetooth_connect = () => {
+  const [UUID, setUUID] = useState('no UUID');
+  const [RSSI, setRSSI] = useState('no RSSI');
 
   useEffect(() => {
     scanForBeacons();
@@ -49,3 +49,5 @@ export default function App() {
     </View>
   );
 }
+
+export default Bluetooth_connect; */

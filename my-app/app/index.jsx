@@ -5,7 +5,7 @@ import BiometricAuthentication from '../components/BiometricAuthentication';
 const Home = () => {
   return (
     <View style={styles.container}>
-      <BiometricAuthentication />
+      <BiometricAuthentication/>
     </View>
   );
 };

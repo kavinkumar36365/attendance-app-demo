@@ -15,11 +15,8 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-<<<<<<< HEAD
-        "NSBluetoothAlwaysUsageDescription": "We use Bluetooth to access BLE beacons for indoor positioning."
-=======
+        "NSBluetoothAlwaysUsageDescription": "We use Bluetooth to access BLE beacons for indoor positioning.",
         "NSFaceIDUsageDescription": "This app requires Face ID for authentication."
->>>>>>> 09894329d850465d238a4dd555fe585e55373ce1
       }
     },
     "android": {
@@ -27,18 +24,13 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-<<<<<<< HEAD
       "permissions": [
+        "USE_BIOMETRIC",
+        "USE_FINGERPRINT",
         "ACCESS_FINE_LOCATION",
         "BLUETOOTH",
         "BLUETOOTH_ADMIN"
       ]
-=======
-      "permissions": [
-        "USE_BIOMETRIC",
-        "USE_FINGERPRINT"
-      ]
->>>>>>> 09894329d850465d238a4dd555fe585e55373ce1
     },
     "web": {
       "bundler": "metro",
@@ -47,16 +39,13 @@
     },
     "plugins": [
       "expo-router",
-<<<<<<< HEAD
-      "react-native-ble-plx"
-=======
+      "react-native-ble-plx",
       [
         "expo-local-authentication",
         {
           "faceIDPermission": "Allow my-app to use Face ID."
         }
       ]
->>>>>>> 09894329d850465d238a4dd555fe585e55373ce1
     ],
     "experiments": {
       "typedRoutes": true

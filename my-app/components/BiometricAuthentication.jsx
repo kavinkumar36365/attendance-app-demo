@@ -58,7 +58,7 @@ const BiometricAuthentication = () => {
         if (authResult?.success) {
             setIsAuthenticated(true);
             Alert.alert('Authenticated', 'Welcome back!');
-            router.push('/home');
+            router.push('home');
         } else {
             Alert.alert('Authentication failed', 'Please try again.');
         }
