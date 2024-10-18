@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Platform, PermissionsAndroid } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 
 const manager = new BleManager();
 
 const requestBluetoothPermission = async () => {
+  console.log('Requesting Bluetooth permission');
   if (Platform.OS === 'ios') {
     return true; // iOS permissions are handled differently
   }
@@ -37,7 +38,7 @@ const requestBluetoothPermission = async () => {
   return false; // Permissions not granted
 };
 
-const scanForBeacons = () => {
+const scanForBeacons = (setUuid, setRssi, setAdvertisedServiceUUIDs) => {
   manager.startDeviceScan(null, null, (error, device) => {
     if (error) {
       console.log('Error scanning for devices:', error);
@@ -45,16 +46,28 @@ const scanForBeacons = () => {
     }
 
     if (device) {
-      device.serviceUUIDs?.forEach((serviceUUID) => {
-        console.log('Found device:', device.id, device.name, serviceUUID);
-      });
-      console.log('RSSI:', device.rssi);
+      console.log('Found device:', device.id, device.name);
+      setUuid(device.id);  // Use device.id as the unique identifier
+      setRssi(device.rssi);
+
+      // Get the advertised service UUIDs
+      if (device.serviceUUIDs) {
+        console.log('Advertised Service UUIDs:', device.serviceUUIDs);
+        setAdvertisedServiceUUIDs(device.serviceUUIDs); // Set advertised UUIDs in state
+      } else {
+        console.log('No advertised service UUIDs found');
+      }
     }
   });
 };
 
 const BluetoothVerification = () => {
+  const [uuid, setUuid] = useState('');
+  const [rssi, setRssi] = useState(0);
+  const [advertisedServiceUUIDs, setAdvertisedServiceUUIDs] = useState([]);
+
   useEffect(() => {
+    console.log('BluetoothVerification mounted');
     const checkPermissionsAndScan = async () => {
       const hasPermission = await requestBluetoothPermission();
       if (!hasPermission) {
@@ -64,7 +77,7 @@ const BluetoothVerification = () => {
 
       const subscription = manager.onStateChange((state) => {
         if (state === 'PoweredOn') {
-          scanForBeacons();
+          scanForBeacons(setUuid, setRssi, setAdvertisedServiceUUIDs);
           subscription.remove(); // Remove subscription once scan starts
         }
       }, true);
@@ -77,13 +90,28 @@ const BluetoothVerification = () => {
 
     checkPermissionsAndScan();
   }, []);
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={styles.container}>
       <Text>Bluetooth Verification</Text>
+      <Text>Device ID: {uuid}</Text>
+      <Text>RSSI: {rssi}</Text>
+      <Text>Advertised Service UUIDs:</Text>
+      {advertisedServiceUUIDs.length > 0 ? (
+        advertisedServiceUUIDs.map((uuid, index) => <Text key={index}>{uuid}</Text>)
+      ) : (
+        <Text>No advertised service UUIDs</Text>
+      )}
     </View>
   );
 };
 
 export default BluetoothVerification;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

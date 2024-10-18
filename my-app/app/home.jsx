@@ -1,12 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-/* import BluetoothVerification from '../components/BluetoothVerification'; */
-import BiometricAuthentication from '../components/BiometricAuthentication';
+import BluetoothVerification from '../components/BluetoothVerification';
 const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home Screen</Text>
-      <BiometricAuthentication/>
+      <BluetoothVerification/>
     </View>
   );
 };
